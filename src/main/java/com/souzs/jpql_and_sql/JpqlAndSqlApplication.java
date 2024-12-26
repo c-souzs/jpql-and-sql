@@ -1,8 +1,10 @@
 package com.souzs.jpql_and_sql;
 
+import com.souzs.jpql_and_sql.dto.CategorySumDTO;
 import com.souzs.jpql_and_sql.dto.CustomerMinDTO;
 import com.souzs.jpql_and_sql.dto.MovieMinDTO;
 import com.souzs.jpql_and_sql.dto.ProductMinDTO;
+import com.souzs.jpql_and_sql.projections.CategorySumProjection;
 import com.souzs.jpql_and_sql.projections.CustomerMinProjection;
 import com.souzs.jpql_and_sql.projections.MovieMinProjection;
 import com.souzs.jpql_and_sql.projections.ProductMinProjection;
@@ -58,7 +60,7 @@ public class JpqlAndSqlApplication implements CommandLineRunner {
 		moviesDTO.forEach(System.out::println);*/
 
 		// URI 2611
-		List<ProductMinProjection> productsProjection = productRepository.searchProductNative(10, 20, "P");
+		/*List<ProductMinProjection> productsProjection = productRepository.searchProductNative(10, 20, "P");
 		List<ProductMinDTO> productsDTO = productsProjection.stream().map(ProductMinDTO::new).toList();
 
 		System.out.println("Search name and amount by native SQL");
@@ -66,6 +68,17 @@ public class JpqlAndSqlApplication implements CommandLineRunner {
 
 		productsDTO = productRepository.searchProductJPQL(10, 20, "P");
 		System.out.println("Search name and amount by JPQL");
-		productsDTO.forEach(System.out::println);
+		productsDTO.forEach(System.out::println);*/
+
+		// URI 2609
+		List<CategorySumProjection> categoriesProjection = productRepository.searchProductGroupByNative();
+		List<CategorySumDTO> categoriesDTO = categoriesProjection.stream().map(CategorySumDTO::new).toList();
+
+		System.out.println("Search group by with native SQL");
+		categoriesDTO.forEach(System.out::println);
+
+		categoriesDTO = productRepository.searchProductGroupByJPQL();
+		System.out.println("Search name and amount by JPQL");
+		categoriesDTO.forEach(System.out::println);
 	}
 }

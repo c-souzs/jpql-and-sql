@@ -15,7 +15,11 @@ public class Product {
 	@ManyToOne
 	@JoinColumn(name = "id_providers")
 	private Provider provider;
-	
+
+	@ManyToOne
+	@JoinColumn(name = "id_categories")
+	private Category category;
+
 	public Product() {
 	}
 
@@ -57,5 +61,13 @@ public class Product {
 
 	public void setProvider(Provider provider) {
 		this.provider = provider;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 }
