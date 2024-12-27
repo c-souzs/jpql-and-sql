@@ -2,10 +2,7 @@ package com.souzs.jpql_and_sql;
 
 import com.souzs.jpql_and_sql.dto.*;
 import com.souzs.jpql_and_sql.projections.*;
-import com.souzs.jpql_and_sql.repositories.CustomerRepository;
-import com.souzs.jpql_and_sql.repositories.LawyerRepository;
-import com.souzs.jpql_and_sql.repositories.MovieRepository;
-import com.souzs.jpql_and_sql.repositories.ProductRepository;
+import com.souzs.jpql_and_sql.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -27,6 +24,9 @@ public class JpqlAndSqlApplication implements CommandLineRunner {
 
 	@Autowired
 	private LawyerRepository lawyerRepository;
+
+	@Autowired
+	private EmpregadoRepository empregadoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(JpqlAndSqlApplication.class, args);
@@ -80,10 +80,21 @@ public class JpqlAndSqlApplication implements CommandLineRunner {
 		categoriesDTO.forEach(System.out::println);*/
 
 		// URI 2737
-		List<LawyerMinProjection> lawyersProjection = lawyerRepository.searchUnionByNative();
+		/*List<LawyerMinProjection> lawyersProjection = lawyerRepository.searchUnionByNative();
 		List<LawyerMinDTO> lawyersDTO = lawyersProjection.stream().map(LawyerMinDTO::new).toList();
 
 		System.out.println("Search union with native SQL");
-		lawyersDTO.forEach(System.out::println);
+		lawyersDTO.forEach(System.out::println);*/
+
+		// URI 2990
+		List<EmpregadoDeptProjection> empregadosProjection = empregadoRepository.searchEmpregadoByNative();
+		List<EmpregadoDeptDTO> empregadosDTO = empregadosProjection.stream().map(EmpregadoDeptDTO::new).toList();
+
+		System.out.println("Search with native SQL");
+		empregadosDTO.forEach(System.out::println);
+
+		empregadosDTO = empregadoRepository.searchEmpregadoByJPQL();
+		System.out.println("Search with native JPQL");
+		empregadosDTO.forEach(System.out::println);
 	}
 }
