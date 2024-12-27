@@ -1,14 +1,9 @@
 package com.souzs.jpql_and_sql;
 
-import com.souzs.jpql_and_sql.dto.CategorySumDTO;
-import com.souzs.jpql_and_sql.dto.CustomerMinDTO;
-import com.souzs.jpql_and_sql.dto.MovieMinDTO;
-import com.souzs.jpql_and_sql.dto.ProductMinDTO;
-import com.souzs.jpql_and_sql.projections.CategorySumProjection;
-import com.souzs.jpql_and_sql.projections.CustomerMinProjection;
-import com.souzs.jpql_and_sql.projections.MovieMinProjection;
-import com.souzs.jpql_and_sql.projections.ProductMinProjection;
+import com.souzs.jpql_and_sql.dto.*;
+import com.souzs.jpql_and_sql.projections.*;
 import com.souzs.jpql_and_sql.repositories.CustomerRepository;
+import com.souzs.jpql_and_sql.repositories.LawyerRepository;
 import com.souzs.jpql_and_sql.repositories.MovieRepository;
 import com.souzs.jpql_and_sql.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +24,9 @@ public class JpqlAndSqlApplication implements CommandLineRunner {
 
 	@Autowired
 	private ProductRepository productRepository;
+
+	@Autowired
+	private LawyerRepository lawyerRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(JpqlAndSqlApplication.class, args);
@@ -71,7 +69,7 @@ public class JpqlAndSqlApplication implements CommandLineRunner {
 		productsDTO.forEach(System.out::println);*/
 
 		// URI 2609
-		List<CategorySumProjection> categoriesProjection = productRepository.searchProductGroupByNative();
+		/*List<CategorySumProjection> categoriesProjection = productRepository.searchProductGroupByNative();
 		List<CategorySumDTO> categoriesDTO = categoriesProjection.stream().map(CategorySumDTO::new).toList();
 
 		System.out.println("Search group by with native SQL");
@@ -79,6 +77,13 @@ public class JpqlAndSqlApplication implements CommandLineRunner {
 
 		categoriesDTO = productRepository.searchProductGroupByJPQL();
 		System.out.println("Search name and amount by JPQL");
-		categoriesDTO.forEach(System.out::println);
+		categoriesDTO.forEach(System.out::println);*/
+
+		// URI 2737
+		List<LawyerMinProjection> lawyersProjection = lawyerRepository.searchUnionByNative();
+		List<LawyerMinDTO> lawyersDTO = lawyersProjection.stream().map(LawyerMinDTO::new).toList();
+
+		System.out.println("Search union with native SQL");
+		lawyersDTO.forEach(System.out::println);
 	}
 }
